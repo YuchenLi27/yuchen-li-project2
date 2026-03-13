@@ -1,15 +1,24 @@
 import { useEffect } from 'react'
 import { useGame } from '../context/GameContext'
 import SudokuBoard from '../components/SudokuBoard'
+import Timer from '../components/Timer'
 
 export default function EasyGamePage() {
-  const { dispatch } = useGame()
+  const { state, dispatch } = useGame()
 
   useEffect(() => {
     dispatch({
       type: 'START_GAME',
       payload: { mode: 'easy' },
     })
+  }, [dispatch])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      dispatch({ type: 'TICK' })
+    }, 1000)
+
+    return () => clearInterval(intervalId)
   }, [dispatch])
 
   function handleNewGame() {
@@ -29,8 +38,14 @@ export default function EasyGamePage() {
       <p>6x6 Sudoku board with preset puzzles.</p>
 
       <div className="game-topbar">
-        <div className="timer-box">Time: 00:00</div>
+        <Timer />
       </div>
+
+      {state.isComplete && (
+        <div className="win-message">
+          Congratulations! You completed the easy Sudoku.
+        </div>
+      )}
 
       <SudokuBoard mode="easy" />
 

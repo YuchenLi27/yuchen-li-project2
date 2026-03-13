@@ -1,9 +1,20 @@
 import { useGame } from '../context/GameContext'
 
-export default function SudokuCell({ rowIndex, colIndex, value, isLocked, maxValue }) {
-  const { dispatch } = useGame()
+export default function SudokuCell({
+  rowIndex,
+  colIndex,
+  value,
+  isLocked,
+  isInvalid,
+  maxValue,
+}) {
+  const { state, dispatch } = useGame()
 
   function handleChange(event) {
+    if (state.isComplete) {
+      return
+    }
+
     const rawValue = event.target.value
 
     if (rawValue === '') {
@@ -18,11 +29,11 @@ export default function SudokuCell({ rowIndex, colIndex, value, isLocked, maxVal
       return
     }
 
-    const parsedValue = Number(rawValue)
-
-    if (!Number.isInteger(parsedValue)) {
+    if (!/^\d$/.test(rawValue)) {
       return
     }
+
+    const parsedValue = Number(rawValue)
 
     if (parsedValue < 1 || parsedValue > maxValue) {
       return
@@ -38,14 +49,23 @@ export default function SudokuCell({ rowIndex, colIndex, value, isLocked, maxVal
     })
   }
 
+  const className = [
+    'sudoku-cell',
+    isLocked ? 'locked' : '',
+    isInvalid ? 'invalid' : '',
+    state.isComplete ? 'complete' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
     <input
-      className={`sudoku-cell ${isLocked ? 'locked' : ''}`}
+      className={className}
       type="text"
       inputMode="numeric"
       value={value === 0 ? '' : value}
       onChange={handleChange}
-      disabled={isLocked}
+      disabled={isLocked || state.isComplete}
       maxLength={1}
     />
   )

@@ -2,17 +2,17 @@ import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   return (
-    <section className="hero card">
-      <div className="hero-badge">React + Context Sudoku</div>
+    <section className="hero card home-hero">
+      <div className="hero-badge">Single Player Sudoku</div>
       <h1>Sudoku</h1>
       <p>
-        A single-player Sudoku app with easy and normal modes, built with React,
-        React Router, and Context API.
+        Welcome to a React Sudoku app with easy and normal modes.
+        Read the rules or head to the game selection page to start playing.
       </p>
 
       <div className="button-row">
-        <Link to="/games" className="btn">Play Now</Link>
-        <Link to="/rules" className="btn btn-secondary">Read Rules</Link>
+        <Link to="/games" className="btn">Go to Games</Link>
+        <Link to="/rules" className="btn btn-secondary">View Rules</Link>
       </div>
     </section>
   )

@@ -14,13 +14,13 @@ export default function RulesPage() {
         <h2>Credits</h2>
         <p>Made by: Yuchen Li</p>
         <p>
-          GitHub: <a href="https://github.com/YuchenLi27/Sudoku" target="_blank" rel="noreferrer">github.com/yourname</a>
+          GitHub: <a href="https://github.com/YuchenLi27/Sudoku" target="_blank" rel="noreferrer">github.com/YuchenLi27/yuchen-li-project2</a>
         </p>
         <p>
-          LinkedIn: <a href="https://www.linkedin.com/in/yuchen-li-ycl/" target="_blank" rel="noreferrer">linkedin.com/in/yourname</a>
+          LinkedIn: <a href="https://www.linkedin.com/in/yuchen-li-ycl/" target="_blank" rel="noreferrer">linkedin.com/in/yuchen-li-ycl</a>
         </p>
         <p>
-          Email: <a href="yuyuchenchen27@gmail.com">yourname@example.com</a>
+          Email: <a href="yuyuchenchen27@gmail.com">yuyuchenchen27@gmail.com</a>
         </p>
       </div>
     </section>
