@@ -11,7 +11,7 @@ export default function NormalGamePage() {
       type: 'START_GAME',
       payload: { mode: 'normal' },
     })
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     const intervalId = setInterval(() => {

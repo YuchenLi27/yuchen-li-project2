@@ -11,7 +11,8 @@ export default function EasyGamePage() {
       type: 'START_GAME',
       payload: { mode: 'easy' },
     })
-  }, [dispatch])
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
