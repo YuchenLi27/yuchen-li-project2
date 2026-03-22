@@ -7,10 +7,13 @@ export default function NormalGamePage() {
   const { state, dispatch } = useGame()
 
   useEffect(() => {
-    dispatch({
-      type: 'START_GAME',
-      payload: { mode: 'normal' },
-    })
+    if (!state.currentBoard.length || state.mode !== 'normal') {
+      dispatch({
+        type: 'START_GAME',
+        payload: { mode: 'normal' },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -29,29 +32,45 @@ export default function NormalGamePage() {
   }
 
   function handleReset() {
+    localStorage.removeItem('sudoku-game-state')
     dispatch({ type: 'RESET_GAME' })
   }
 
-  return (
-    <section className="card">
-      <h1>Normal Game</h1>
-      <p>9x9 Sudoku board with preset puzzles.</p>
+  function handleHint() {
+    dispatch({ type: 'SET_HINT' })
+  }
 
-      <div className="game-topbar">
+  return (
+    <section className="game-page">
+      <div className="game-header">
+        <h1>Normal Game</h1>
         <Timer />
       </div>
 
+      <p>9x9 Sudoku board with preset puzzles.</p>
+
       {state.isComplete && (
-        <div className="win-message">
+        <p className="success-message">
           Congratulations! You completed the normal Sudoku.
-        </div>
+        </p>
       )}
 
-      <SudokuBoard mode="normal" />
+      {!state.isComplete && state.hintCell === null && (
+        <p className="hint-message">
+          Press Hint to highlight a square that has exactly one valid answer.
+        </p>
+      )}
 
-      <div className="button-row">
-        <button className="btn" onClick={handleNewGame}>New Game</button>
-        <button className="btn btn-secondary" onClick={handleReset}>Reset</button>
+      <div className="board-scroll">
+        <SudokuBoard mode="normal" />
+      </div>
+
+      <div className="game-actions">
+        <button onClick={handleNewGame}>New Game</button>
+        <button onClick={handleReset}>Reset</button>
+        <button onClick={handleHint} disabled={state.isComplete}>
+          Hint
+        </button>
       </div>
     </section>
   )

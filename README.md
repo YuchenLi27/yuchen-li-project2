@@ -1,219 +1,134 @@
-Sudoku – React Web Application
+# Sudoku Game (React + Context API)
 
-This project is a single-player Sudoku web application built using React, React Router, and the Context API for state management. The application allows users to play either an easy (6×6) or normal (9×9) version of Sudoku.
+## Overview
 
-The goal of the project is to demonstrate modern front-end development practices including component-based architecture, state management, and responsive design.
+This project is a single-player Sudoku game built using React and the Context API for state management. It includes two difficulty levels (Easy and Normal), dynamic puzzle generation, validation logic, and a clean multi-page UI using React Router.
 
-Live Application
+The application demonstrates core React principles, state management with reducers, and interactive UI behavior.
 
-Render Deployment:
+---
+
+## Features
+
+### Game Modes
+
+* **Easy Mode (6x6)**
+
+  * Half of the board is pre-filled
+* **Normal Mode (9x9)**
+
+  * 28–30 cells pre-filled
+
+Each game is randomly generated on load.
+
+---
+
+### Core Gameplay
+
+* Editable and non-editable cells
+* Input validation (only valid numbers allowed)
+* Real-time rule checking:
+
+  * Row
+  * Column
+  * Subgrid
+* Invalid cells are highlighted in red
+* Cells can be updated or cleared
+* Board locks upon completion
+* Completion message displayed
+
+---
+
+### Game Controls
+
+* **New Game**: Generates a new puzzle
+* **Reset**: Resets board to original state
+* **Hint**: Highlights a cell with exactly one valid solution
+* **Timer**: Tracks elapsed time
+
+---
+
+### State Management
+
+* Implemented using **React Context + useReducer**
+* Centralized game state includes:
+
+  * Current board
+  * Initial board
+  * Solution
+  * Invalid cells
+  * Timer
+  * Completion state
+
+---
+
+### Bonus Features
+
+#### Local Storage Persistence
+
+* Game state is saved automatically after each move
+* State is restored when the page reloads
+* Cleared on reset or completion
+
+#### Backtracking Algorithm
+
+* Sudoku boards are generated using backtracking
+* Ensures each puzzle has a **unique solution**
+
+#### Hint System
+
+* Highlights a cell that has only one valid value
+* Based on rule validation logic
+
+---
+
+## Routing
+
+| Page           | Path            |
+| -------------- | --------------- |
+| Home           | `/`             |
+| Game Selection | `/games`        |
+| Easy Game      | `/games/easy`   |
+| Normal Game    | `/games/normal` |
+| Rules          | `/rules`        |
+| High Scores    | `/scores`       |
+| Login          | `/login`        |
+| Register       | `/register`     |
+
+---
+
+## Tech Stack
+
+* React
+* React Router
+* Context API + useReducer
+* CSS
+
+---
+
+## Deployment
+
+Deployed on Render
+👉 (Add your Render link here)
+
+---
+
+## How to Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## Author
+
+* Live Application
+* Render Deployment:
 
 https://sudoku-react-qv9m.onrender.com
 
 GitHub Repository
 https://github.com/YuchenLi27/yuchen-li-project2
 
-Features
-Game Modes
-
-The application includes two Sudoku game modes:
-
-Easy Mode
-
-6×6 Sudoku board
-
-Approximately half the board is prefilled
-
-Numbers allowed: 1–6
-
-Normal Mode
-
-9×9 Sudoku board
-
-Around 28–30 cells prefilled
-
-Numbers allowed: 1–9
-
-Each time a user visits the game page, a random puzzle is selected from a predefined puzzle set.
-
-Core Gameplay Features
-Editable and Locked Cells
-
-Cells that are initially filled are locked and not editable.
-Empty cells allow the player to input values that can be changed later.
-
-Input Validation
-
-The application ensures that:
-
-Only valid numbers are accepted
-
-Invalid placements are detected
-
-Cells violating Sudoku rules are highlighted in red
-
-Rules checked include:
-
-Row uniqueness
-
-Column uniqueness
-
-Subgrid uniqueness
-
-Victory Detection
-
-When the board is correctly completed:
-
-The board locks
-
-A congratulations message appears
-
-The timer stops
-
-Timer
-
-A game timer tracks how long the player has been playing.
-
-The timer:
-
-Starts when a new puzzle loads
-
-Resets when New Game or Reset is pressed
-
-Stops once the puzzle is completed
-
-Reset and New Game
-
-Reset
-
-Restores the puzzle to its original state
-
-Clears user inputs
-
-Resets the timer
-
-New Game
-
-Loads a new random puzzle
-
-Resets the timer
-
-Navigation and Pages
-
-The application includes multiple views accessible through the navigation bar.
-
-Route	Description
-/	Home / Welcome page
-/games	Game selection page
-/games/easy	Easy Sudoku board
-/games/normal	Normal Sudoku board
-/rules	Game rules
-/scores	Mock high scores
-/login	Login page
-/register	Register page
-
-Some pages (login, register, scores) are mock pages and contain static data.
-
-Technologies Used
-
-React
-
-React Router
-
-Context API
-
-JavaScript (ES6)
-
-CSS
-
-Vite
-
-State Management
-
-Game state is managed using the React Context API with a reducer pattern.
-
-The central game state stores:
-
-mode
-initialBoard
-currentBoard
-solution
-invalidCells
-isComplete
-elapsedTime
-
-Actions include:
-
-START_GAME
-UPDATE_CELL
-RESET_GAME
-TICK
-
-This architecture ensures a unidirectional data flow and avoids passing callbacks deeply through components.
-
-Component Structure
-
-Major components include:
-
-Navbar
-Timer
-SudokuBoard
-SudokuCell
-
-The Sudoku board is composed of many nested SudokuCell components, demonstrating React component composition.
-
-Responsive Design
-
-The application is designed to work on both desktop and mobile devices.
-
-Key responsive features include:
-
-Flexible grid layout
-
-Scrollable Sudoku board on smaller screens
-
-Adaptive spacing and font sizes
-
-Sudoku Board Implementation
-
-The Sudoku board is rendered dynamically using arrays stored in state.
-
-Each board is represented as a 2D array.
-
-Example:
-
-[
- [5,3,0,0,7,0,0,0,0],
- [6,0,0,1,9,5,0,0,0],
- ...
-]
-
-Cells containing 0 represent empty spaces.
-
-Invalid Move Detection
-
-When a player enters a number, the application checks:
-
-Row duplicates
-
-Column duplicates
-
-Subgrid duplicates
-
-If conflicts exist, the related cells are added to the invalidCells state and rendered with a red border.
-
-Deployment
-
-The application is deployed using Render Static Sites.
-
-Build configuration:
-
-Build Command:
-npm install && npm run build
-
-Publish Directory:
-dist
-
-React Router routes are supported using a rewrite rule:
-
-/* → /index.html

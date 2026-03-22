@@ -6,12 +6,13 @@ export default function SudokuCell({
   value,
   isLocked,
   isInvalid,
+  isHint,
   maxValue,
 }) {
   const { state, dispatch } = useGame()
 
   function handleChange(event) {
-    if (state.isComplete) {
+    if (state.isComplete || isLocked) {
       return
     }
 
@@ -53,6 +54,7 @@ export default function SudokuCell({
     'sudoku-cell',
     isLocked ? 'locked' : '',
     isInvalid ? 'invalid' : '',
+    isHint ? 'hint' : '',
     state.isComplete ? 'complete' : '',
   ]
     .filter(Boolean)
@@ -63,10 +65,12 @@ export default function SudokuCell({
       className={className}
       type="text"
       inputMode="numeric"
+      pattern="[1-9]*"
+      maxLength={1}
       value={value === 0 ? '' : value}
       onChange={handleChange}
       disabled={isLocked || state.isComplete}
-      maxLength={1}
+      aria-label={`Row ${rowIndex + 1}, Column ${colIndex + 1}`}
     />
   )
 }

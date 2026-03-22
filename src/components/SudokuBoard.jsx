@@ -7,9 +7,11 @@ function makeCellKey(row, col) {
 
 export default function SudokuBoard({ mode }) {
   const { state } = useGame()
+
   const board = state.currentBoard
   const initialBoard = state.initialBoard
   const invalidCells = new Set(state.invalidCells)
+  const hintCell = state.hintCell
 
   if (!board.length) {
     return null
@@ -19,27 +21,31 @@ export default function SudokuBoard({ mode }) {
   const boardClassName = mode === 'easy' ? 'board board-6' : 'board board-9'
 
   return (
-    <div className="board-scroll">
-      <div className={boardClassName}>
-        {board.map((row, rowIndex) =>
-          row.map((value, colIndex) => {
-            const isLocked = initialBoard[rowIndex][colIndex] !== 0
-            const isInvalid = invalidCells.has(makeCellKey(rowIndex, colIndex))
+    <div
+      className={boardClassName}
+      style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+    >
+      {board.map((row, rowIndex) =>
+        row.map((value, colIndex) => {
+          const isLocked = initialBoard[rowIndex][colIndex] !== 0
+          const isInvalid = invalidCells.has(makeCellKey(rowIndex, colIndex))
+          const isHint =
+            hintCell?.row === rowIndex && hintCell?.col === colIndex
 
-            return (
-              <SudokuCell
-                key={`${rowIndex}-${colIndex}`}
-                rowIndex={rowIndex}
-                colIndex={colIndex}
-                value={value}
-                isLocked={isLocked}
-                isInvalid={isInvalid}
-                maxValue={size}
-              />
-            )
-          })
-        )}
-      </div>
+          return (
+            <SudokuCell
+              key={makeCellKey(rowIndex, colIndex)}
+              rowIndex={rowIndex}
+              colIndex={colIndex}
+              value={value}
+              isLocked={isLocked}
+              isInvalid={isInvalid}
+              isHint={isHint}
+              maxValue={mode === 'easy' ? 6 : 9}
+            />
+          )
+        })
+      )}
     </div>
   )
 }

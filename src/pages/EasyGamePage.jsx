@@ -7,11 +7,13 @@ export default function EasyGamePage() {
   const { state, dispatch } = useGame()
 
   useEffect(() => {
-    dispatch({
-      type: 'START_GAME',
-      payload: { mode: 'easy' },
-    })
-    // eslint-disable-next-line
+    if (!state.currentBoard.length || state.mode !== 'easy') {
+      dispatch({
+        type: 'START_GAME',
+        payload: { mode: 'easy' },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -30,29 +32,45 @@ export default function EasyGamePage() {
   }
 
   function handleReset() {
+    localStorage.removeItem('sudoku-game-state')
     dispatch({ type: 'RESET_GAME' })
   }
 
-  return (
-    <section className="card">
-      <h1>Easy Game</h1>
-      <p>6x6 Sudoku board with preset puzzles.</p>
+  function handleHint() {
+    dispatch({ type: 'SET_HINT' })
+  }
 
-      <div className="game-topbar">
+  return (
+    <section className="game-page">
+      <div className="game-header">
+        <h1>Easy Game</h1>
         <Timer />
       </div>
 
+      <p>6x6 Sudoku board with preset puzzles.</p>
+
       {state.isComplete && (
-        <div className="win-message">
+        <p className="success-message">
           Congratulations! You completed the easy Sudoku.
-        </div>
+        </p>
       )}
 
-      <SudokuBoard mode="easy" />
+      {!state.isComplete && state.hintCell === null && (
+        <p className="hint-message">
+          Press Hint to highlight a square that has exactly one valid answer.
+        </p>
+      )}
 
-      <div className="button-row">
-        <button className="btn" onClick={handleNewGame}>New Game</button>
-        <button className="btn btn-secondary" onClick={handleReset}>Reset</button>
+      <div className="board-scroll">
+        <SudokuBoard mode="easy" />
+      </div>
+
+      <div className="game-actions">
+        <button onClick={handleNewGame}>New Game</button>
+        <button onClick={handleReset}>Reset</button>
+        <button onClick={handleHint} disabled={state.isComplete}>
+          Hint
+        </button>
       </div>
     </section>
   )
