@@ -1,9 +1,10 @@
 # 📘 Sudoku Game (React + State Management)
 
 ## Live Demo
-Render Deployment: https://yuchen-li-project2.onrender.com
-GitHub Repository: https://github.com/YuchenLi27/yuchen-li-project2
-Overview
+Render Deployment: https://yuchen-li-project2.onrender.com 
+GitHub Repository: https://github.com/YuchenLi27/yuchen-li-project2 
+
+## Overview
 
 This project is a single-player Sudoku game built with React, React Router, and Context API (useReducer) for state management.
 
