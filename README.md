@@ -1,134 +1,199 @@
-# Sudoku Game (React + Context API)
+# 📘 Sudoku Game (React + State Management)
 
-## Overview
+## Live Demo
+Render Deployment: https://yuchen-li-project2.onrender.com
+GitHub Repository: https://github.com/YuchenLi27/yuchen-li-project2
+Overview
 
-This project is a single-player Sudoku game built using React and the Context API for state management. It includes two difficulty levels (Easy and Normal), dynamic puzzle generation, validation logic, and a clean multi-page UI using React Router.
+This project is a single-player Sudoku game built with React, React Router, and Context API (useReducer) for state management.
 
-The application demonstrates core React principles, state management with reducers, and interactive UI behavior.
+## The application supports two difficulty levels:
 
----
+Easy (6×6 board)
+Normal (9×9 board)
 
-## Features
+Users can play Sudoku with real-time validation, timer tracking, and additional features such as hints and persistent state.
 
-### Game Modes
+### Features
+Core Gameplay
+Two game modes:
+Easy (6×6)
+Normal (9×9)
 
-* **Easy Mode (6x6)**
-
-  * Half of the board is pre-filled
-* **Normal Mode (9x9)**
-
-  * 28–30 cells pre-filled
-
-Each game is randomly generated on load.
-
----
-
-### Core Gameplay
-
-* Editable and non-editable cells
-* Input validation (only valid numbers allowed)
-* Real-time rule checking:
-
-  * Row
-  * Column
-  * Subgrid
-* Invalid cells are highlighted in red
-* Cells can be updated or cleared
-* Board locks upon completion
-* Completion message displayed
-
----
+Pre-filled cells (givens) based on difficulty
+Editable cells for user input
+Input validation (only valid number ranges allowed)
+Invalid moves are highlighted
+Game completion detection
+Board locks after completion
+“Congratulations” message displayed upon success
 
 ### Game Controls
+New Game → generates a new puzzle
+Reset → resets current board to initial state
+Timer → tracks elapsed time during gameplay
 
-* **New Game**: Generates a new puzzle
-* **Reset**: Resets board to original state
-* **Hint**: Highlights a cell with exactly one valid solution
-* **Timer**: Tracks elapsed time
+### Navigation Pages
+/ → Home page
+/games → Game selection page
+/games/easy → Easy mode
+/games/normal → Normal mode
+/rules → Game rules + credits
+/scores → Mock leaderboard
+/login → Mock login form
+/register → Mock registration form
 
----
+### UI & Styling
+Responsive layout
+Visual differentiation for:
+Locked cells
+Invalid cells
+Hint cells
+Clean and consistent page structure using layout + navbar
+Tech Stack
+React (Vite)
+React Router
+Context API + useReducer
+JavaScript (ES6+)
+CSS (custom styling)
 
-### State Management
+### Project Structure
+src/
+  components/
+    Navbar.jsx
+    Layout.jsx
+    SudokuBoard.jsx
+    SudokuCell.jsx
+    Timer.jsx
 
-* Implemented using **React Context + useReducer**
-* Centralized game state includes:
+  pages/
+    HomePage.jsx
+    GamesPage.jsx
+    EasyGamePage.jsx
+    NormalGamePage.jsx
+    RulesPage.jsx
+    ScoresPage.jsx
+    LoginPage.jsx
+    RegisterPage.jsx
 
-  * Current board
-  * Initial board
-  * Solution
-  * Invalid cells
-  * Timer
-  * Completion state
+  context/
+    GameContext.jsx
 
----
+  utils/
+    puzzles.js
 
-### Bonus Features
+  styles/
+    global.css
 
-#### Local Storage Persistence
+## State Management
 
-* Game state is saved automatically after each move
-* State is restored when the page reloads
-* Cleared on reset or completion
+This project uses React Context + useReducer to manage global game state.
 
-#### Backtracking Algorithm
+State includes:
+mode
+initialBoard
+currentBoard
+solution
+invalidCells
+isComplete
+elapsedTime
+hintCell
+Actions include:
+START_GAME
+UPDATE_CELL
+RESET_GAME
+TICK
+SET_HINT
+CLEAR_HINT
 
-* Sudoku boards are generated using backtracking
-* Ensures each puzzle has a **unique solution**
+All logic related to state transitions is centralized in:
 
-#### Hint System
-
-* Highlights a cell that has only one valid value
-* Based on rule validation logic
-
----
-
-## Routing
-
-| Page           | Path            |
-| -------------- | --------------- |
-| Home           | `/`             |
-| Game Selection | `/games`        |
-| Easy Game      | `/games/easy`   |
-| Normal Game    | `/games/normal` |
-| Rules          | `/rules`        |
-| High Scores    | `/scores`       |
-| Login          | `/login`        |
-| Register       | `/register`     |
-
----
-
-## Tech Stack
-
-* React
-* React Router
-* Context API + useReducer
-* CSS
-
----
-
-## Deployment
-
-Deployed on Render
-👉 (Add your Render link here)
-
----
-
-## How to Run Locally
-
-```bash
+src/context/GameContext.jsx
+How to Run Locally
+git clone https://github.com/YuchenLi27/yuchen-li-project2.git
+cd yuchen-li-project2
 npm install
 npm run dev
-```
 
----
 
-## Author
+# 📝 Writeup
+### 1. What challenges did you face?
 
-* Live Application
-* Render Deployment:
+One of the main challenges was implementing a valid Sudoku generator instead of using pre-defined puzzles.
+Ensuring that each generated puzzle has exactly one unique solution required combining backtracking with a solution-counting mechanism.
 
-https://sudoku-react-qv9m.onrender.com
+Another challenge was managing global state cleanly. Initially, it was tempting to store state inside components, but this quickly became unmanageable. Refactoring everything into a Context + reducer architecture improved maintainability but required careful planning of actions and state structure.
 
-GitHub Repository
-https://github.com/YuchenLi27/yuchen-li-project2
+Handling validation (highlighting invalid cells dynamically) was also non-trivial, since each input needed to be checked against row, column, and sub-grid constraints.
 
+### 2. If you had more time, what would you improve?
+
+If given more time, I would:
+
+Improve UI/UX:
+Add better animations and transitions
+Improve mobile responsiveness further
+Add advanced gameplay features:
+Difficulty scaling beyond easy/normal
+Pencil marks (candidate numbers)
+Improve performance of puzzle generation
+Add real authentication and persistent leaderboard
+Write unit tests for core logic (especially puzzle generation)
+
+### 3. What assumptions did you make?
+Users will input only numeric values (validated in input field)
+Easy mode uses a smaller board (6×6) instead of standard 9×9
+Scores page and authentication pages are mock implementations
+Timer runs continuously once a game starts
+### 4. How long did you spend on this project?
+
+Approximately 50 hours, including:
+
+Designing architecture
+Implementing puzzle generation
+Building UI components
+Debugging and refining state management
+### 5. Bonus Features Implemented
+
+
+## ✅ Bonus 1: Local Storage
+
+The game state is saved to localStorage so that progress persists after refresh.
+
+Implementation:
+
+File: src/context/GameContext.jsx
+Functions:
+loadSavedState()
+localStorage.setItem(...)
+localStorage.removeItem(...)
+## ✅ Bonus 2: Backtracking with Unique Solution
+
+The Sudoku board is generated dynamically using backtracking.
+
+Implementation:
+
+File: src/utils/puzzles.js
+Key functions:
+fillBoard() → generate full solution
+countSolutions() → ensure uniqueness
+createPuzzleFromSolution() → remove numbers safely
+generateGame() → full pipeline
+## ✅ Bonus 3: Hint System
+
+Provides a hint by identifying a correct value for an incorrect or empty cell.
+
+Implementation:
+
+File: src/context/GameContext.jsx
+Function: findHintCell()
+State: hintCell
+UI: Highlighted in SudokuCell.jsx
+Final Notes
+
+This project demonstrates:
+
+Proper use of React architecture
+Clean separation of concerns
+Implementation of non-trivial algorithms
+Practical state management with Context API
