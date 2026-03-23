@@ -190,7 +190,9 @@ File: src/context/GameContext.jsx
 Function: findHintCell()
 State: hintCell
 UI: Highlighted in SudokuCell.jsx
-Final Notes
+
+
+## Final Notes
 
 This project demonstrates:
 
