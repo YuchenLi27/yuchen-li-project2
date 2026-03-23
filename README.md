@@ -1,8 +1,8 @@
 # 📘 Sudoku Game (React + State Management)
 
 ## Live Demo
-Render Deployment: https://yuchen-li-project2.onrender.com 
-GitHub Repository: https://github.com/YuchenLi27/yuchen-li-project2 
+Render Deployment: https://sudoku-react-qv9m.onrender.com  
+GitHub Repository: https://github.com/YuchenLi27/yuchen-li-project2   
 
 ## Overview
 
